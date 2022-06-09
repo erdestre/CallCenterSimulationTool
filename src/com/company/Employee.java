@@ -1,23 +1,42 @@
 package com.company;
 
+import java.util.Random;
+
 public class Employee extends Simulation {
 
-    float responseTime;
     int employeeId;
+    double responseTimeMultiplier;
     boolean isAvaliable;
 
-    //Timer timer = new Timer();
+    int CurrentTaskResponseTime;
 
-    void GetValues(Simulation simulation, int employeeId, float responseTime){
+    void GetValues(int employeeId, float responseTimeMultiplier){
 
         this.employeeId = employeeId;
-        this.responseTime = responseTime;
+        this.responseTimeMultiplier = responseTimeMultiplier;
     }
 
+    void StartServe(Customer customer){
+        isAvaliable = false;
+        AddServingEmployeesLL(employeeId);
+
+        CurrentTaskResponseTime = RoundNumber(responseTimeMultiplier*customer.CallTopicTime);
+    }
     void Serving (){ //Timer'a bakılması lazım.
-        if (/*timerWillBeHere*/true){
-            isAvaliable = true;
-            avaliableEmployees.add(employeeId);
+
+        if(CurrentTaskResponseTime >= 0){
+            CurrentTaskResponseTime--;
+
         }
+        else {
+            AddAvaliableEmployeesLL(employeeId);
+            RemoveServingEmployeesLL(employeeId);
+            isAvaliable = true;
+            servedCustomers++;
+        }
+    }
+    void Randomize(){
+        Random rand = new Random();
+        responseTimeMultiplier = (Math.random() + 0.5);
     }
 }

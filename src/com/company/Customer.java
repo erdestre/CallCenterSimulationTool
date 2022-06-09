@@ -1,29 +1,29 @@
 package com.company;
 
+import java.util.Random;
 import java.util.Timer;
 
 public class Customer extends Simulation{
 
-    CallTopics callTopic;
-    Timer timer = new Timer();
-    float patienceTime;
+    String CallTopic;
+    int CustomerID;
+    int CallTopicTime = 300;
+    float patienceTime = 300;
 
     void Waiting (){
-        if (timer.equals(0)){
-            queue.remove(this);
+        if (patienceTime == 0){
+            QueueLL(this);
             totalMissedCall++;
         }
     }
-    void Speaking(){
-        if (timer.equals(0)){
-            servedCustomers++;
-        }
-    }
-}
+    void TakingServe(){
 
-class CallTopics {
-    static String[] callTopics;
-    Float[] ServeTimeForTopics;
+    }
+
+    void Randomize(){
+        Random rand = new Random();
+        patienceTime = RoundNumber((Math.random()*(patienceTime*4 - patienceTime/4) + patienceTime/4));
+    }
 }
 
 
